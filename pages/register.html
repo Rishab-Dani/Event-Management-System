@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Register</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+     <link rel="stylesheet" href="./../css/register.css">
+     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./../css/our_package.css">
+    <link rel="stylesheet" href="./../css/style.css" />
+</head>
+<body>
+   <header class="header">
+      <a href="./../index.html"> <img src="./../png/logo2.png" alt="logo"> </a>
+      <input type="checkbox" id="check" />
+      <label for="check" class="menu-bar">
+        <i class="bx bx-menu" id="menu-icon"></i>
+        <i class="bx bx-x" id="close-icon"></i>
+      </label>
+      <nav class="navbar">
+        <a href="./../index.html">Home</a>
+        <a href="./../pages/about.html">About Us</a>
+        <a href="./../pages/services.html">Services</a>
+        <a href="./../pages/our_packages.html">Our Packages</a>
+        <a href="./../pages/venu_page.html">Venue</a>
+        <a href="./../pages/Events.html">Events</a>
+        <a href="./../pages/admin.html">Admin</a>
+        <a href="./../pages/login.html">Login</a>
+      </nav>
+    </header>
+   
+     <form class="register_form">
+
+               <h1 class="register_title">Register</h1>
+
+               <div class="input_box">
+                <i class="fa-solid fa-user"></i>
+               <input type="text" id="username" placeholder="User Name" value="" required/>
+             </div>
+
+             <div class="input_box">
+                <i class="fa-solid fa-envelope"></i>
+               <input type="text" id="email" placeholder="Email" value=""/>
+             </div>
+
+             <div class="input_box">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="password" value="" />
+              </div>
+
+             <div class="input_box">
+                <i class="fa-solid fa-phone"></i>
+               <input type="number" id="phone" placeholder="Phone" value="" />
+             </div>
+
+             <div class="input_box">
+                <i class="fa-solid fa-location-dot"></i>
+               <input type="text" id="address" placeholder="Address" value="" />
+             </div>
+                   
+                 <button id="submit"  type="submit" class="sub">Create</button>
+                
+                 </p>
+ 
+                 <div class="message_box"></div>
+             </form>
+
+             <script type="module">
+       
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+                import { getDatabase, ref, set, child } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js"; 
+               
+                // Your web app's Firebase configuration
+                const firebaseConfig = {
+                    apiKey: "AIzaSyAEAjEVh1ucqElD0GoWb9Y3qtBwKwrgxdw",
+                    authDomain: "event-management-system-2820a.firebaseapp.com",
+                    projectId: "event-management-system-2820a",
+                    storageBucket: "event-management-system-2820a.firebasestorage.app",
+                    messagingSenderId: "640967132487",
+                    appId: "1:640967132487:web:a2646c5954e4e1ac89f862"
+                  };
+              
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+        
+                //get ref to database services
+                const db = getDatabase(app);
+        
+              
+                document.getElementById("submit").addEventListener('click', function(e){
+                    e.preventDefault();
+                    set(ref(db, 'user/' + document.getElementById("username").value),
+                    {
+                        username: document.getElementById("username").value,
+                        email: document.getElementById("email").value,
+                        password: document.getElementById("password").value,
+                        phone: document.getElementById("phone").value,
+                        address: document.getElementById("address").value,
+                    });
+                       alert("Registered Successfully")
+        
+                })
+
+                let btnClick = document.querySelector("button");
+
+                btnClick.addEventListener("click", () =>{
+                    window.location.href = "./../pages/login.html";
+                })
+                
+              </script>
+             
+             <!-- <script type="module">
+
+              import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+              import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+              import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+              import "firebase/firestore";
+               
+                // Your web app's Firebase configuration
+                const firebaseConfig = {
+                  apiKey: "AIzaSyAEAjEVh1ucqElD0GoWb9Y3qtBwKwrgxdw",
+                  authDomain: "event-management-system-2820a.firebaseapp.com",
+                  projectId: "event-management-system-2820a",
+                  storageBucket: "event-management-system-2820a.firebasestorage.app",
+                  messagingSenderId: "640967132487",
+                  appId: "1:640967132487:web:a2646c5954e4e1ac89f862"
+                };
+              
+              
+               // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                const auth= getAuth(app);
+                const db = getFirestore(app);
+ 
+                const submit = document.getElementById("submit");
+
+                submit.addEventListener("click", function(event){
+                event.preventDefault();
+
+                const username = document.getElementById("username").value,
+                const email = document.getElementById("email").value,
+                const password = document.getElementById("password").value,
+                const phone = document.getElementById("phone").value,
+                const address = document.getElementById("address").value,
+
+               
+
+                 //create user document
+                 createUserWithEmailAndPassword(auth, email, password)
+                 .then((userCredential) => {
+                    const user = userCredential.user;
+                    setDoc(doc(db,"users", user.uid), {
+                       email: user.uid,
+                       uid: user.uid,
+                       displayName : username,
+                       phone: phone,
+                       address:address,
+                    }).then(()=> {
+                      window.location.href = "login.html";
+                    });
+                  }) 
+               .catch((error) => {
+            const errorMessage = error.message;
+            alert(errorMessage);
+        
+                })
+ </script> -->
+            
+</body>
+</html>

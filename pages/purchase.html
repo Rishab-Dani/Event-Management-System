@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./../css/purchase.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./../css/our_package.css">
+    <link rel="stylesheet" href="./../css/style.css" />
+
+</head>
+
+<body>
+    
+      
+    <div class="container">
+        <i class="fa-brands fa-cc-visa fa-beat-fade" style="color: #3b75c6; font-size: 100px; margin: 20px;"></i>
+        <form>
+            <div class="input-group">
+                <label for="Package name">Package Name</label>
+                <input type="text"  value="" placeholder="Enter Your Package"  id="package"  required="".>
+            </div>
+        <form>
+            <div class="input-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text"  value="" placeholder="Enter Your Card Number"  id="cardNumber"  required="".>
+            </div>
+
+            <div class="input-group">
+                <label for="nameOnCard">Bank Name</label>
+                <input type="text" value="" placeholder="Enter Your Bank Name" id="bankname" required="".>
+            </div>
+
+            <div class="input-group">
+                <label for="Name">User Name</label>
+                <input type="text" value="" placeholder="Enter Your Name" id="username"   required="".>
+            </div>
+
+            <div class="input-group">
+                <label for="Phone">Phone </label>
+                <input type="number" value="" placeholder="Enter Phone no" maxlength="10"  id="phone"  required="".>
+            </div>
+
+            <!-- <div class="input-group">
+                <label for="expiryYY">EXPIRY YY</label>
+                <input type="date" value="" placeholder="YY" maxlength="2" id="expiry"  required="".>
+            </div>
+
+            <div class="input-group">
+                <label for="cvv">CVV</label>
+                <input type="number" value="" placeholder="Enter CVV" maxlength="3"  id="cvv"  required="".>
+            </div> -->
+            <!-- <input type="submit" id="book"  class="button" /> -->
+             <button type="submit" id="book" class="button" aria-required="false" >Book</button>
+            <!-- <a  onclick="document.location ='thankyou.html'" class="button"> Make Payment</a> -->
+        </form>
+    </div>
+    <script src="https://kit.fontawesome.com/76e19bf5a7.js" crossorigin="anonymous"></script>
+    <script type="module">
+       
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getDatabase, ref, set, child } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js"; 
+       
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEAjEVh1ucqElD0GoWb9Y3qtBwKwrgxdw",
+            authDomain: "event-management-system-2820a.firebaseapp.com",
+            projectId: "event-management-system-2820a",
+            storageBucket: "event-management-system-2820a.firebasestorage.app",
+            messagingSenderId: "640967132487",
+            appId: "1:640967132487:web:a2646c5954e4e1ac89f862"
+          };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        //get ref to database services
+        const db = getDatabase(app);
+
+      
+        document.getElementById("book").addEventListener('click', function(e){
+            e.preventDefault();
+            set(ref(db, 'booking/' + document.getElementById("username").value),
+            {
+                username: document.getElementById("username").value,
+                phone: document.getElementById("phone").value,
+                package: document.getElementById("package").value,
+                bankname: document.getElementById("bankname").value,
+                cardNumber: document.getElementById("cardNumber").value,
+              
+            });
+               alert("Booked Successfully")
+
+        })
+
+
+        let btnClick = document.querySelector("button");
+
+btnClick.addEventListener("click", () =>{
+    window.location.href = "./../pages/our_packages.html";
+})
+      </script>
+
+</body>
+
+</html>

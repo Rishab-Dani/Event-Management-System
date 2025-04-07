@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>LOGIN</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+     <link rel="stylesheet" href="./../css/login.css">
+     <link rel="stylesheet" href="index.html">
+     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./../css/our_package.css">
+    <link rel="stylesheet" href="./../css/style.css" />
+</head>
+<body>
+   <header class="header">
+      <a href="./../index.html"> <img src="./../png/logo2.png" alt="logo"> </a>
+      <input type="checkbox" id="check" />
+      <label for="check" class="menu-bar">
+        <i class="bx bx-menu" id="menu-icon"></i>
+        <i class="bx bx-x" id="close-icon"></i>
+      </label>
+      <nav class="navbar">
+        <a href="./../index.html">Home</a>
+        <a href="./../pages/about.html">About Us</a>
+        <a href="./../pages/services.html">Services</a>
+        <a href="./../pages/our_packages.html">Our Packages</a>
+        <a href="./../pages/venu_page.html">Venue</a>
+        <a href="./../pages/Events.html">Events</a>
+        <a href="./../pages/admin.html">Admin</a>
+        <a href="./../pages/login.html">Login</a>
+      </nav>
+    </header>
+   
+     <form class="login_form"> 
+               <h1 class="login_title">Login</h1>
+          
+                 <div class="input_box">
+                    <i class="fa-solid fa-user"></i>
+                   <input type="text" id="email" placeholder="Username" />
+                 </div>
+                 <div class="input_box">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="password" placeholder="password" />
+                  </div>
+                 <div class="remember_forget_box">
+                    <label for="remember">
+                         <input type="checkbox" id="remember">
+                         Remember
+                    </label>
+                    <!-- <a href="#">Forgot password</a> -->
+                 </div>
+                     
+                 <button class="login_btn">Login</button>
+                 <p class="register">
+                    Don't have an account?
+                    <a href="register.html">Register</a>
+                 </p>
+
+                 <div class="message_box"></div>
+             </form>
+             <script type="module">
+               // Import the functions you need from the SDKs you need
+               import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+               import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+               // TODO: Add SDKs for Firebase products that you want to use
+               // https://firebase.google.com/docs/web/setup#available-libraries
+ 
+               const email = document.getElementById("email");
+               const password = document.getElementById("password"); 
+
+               const btn = document.querySelector(".login_btn");
+               const message = document.querySelector(".message_box");
+
+               
+               // Your web app's Firebase configuration
+               const firebaseConfig = {
+                 apiKey: "AIzaSyAEAjEVh1ucqElD0GoWb9Y3qtBwKwrgxdw",
+                 authDomain: "event-management-system-2820a.firebaseapp.com",
+                 projectId: "event-management-system-2820a",
+                 storageBucket: "event-management-system-2820a.firebasestorage.app",
+                 messagingSenderId: "640967132487",
+                 appId: "1:640967132487:web:a2646c5954e4e1ac89f862"
+               };
+             
+               // Initialize Firebase
+               const app = initializeApp(firebaseConfig);
+               const auth = getAuth(app);
+
+               btn.addEventListener("click",function(event){
+                  const email = document.getElementById("email").value;
+                  const password = document.getElementById("password").value;
+                  event.preventDefault();
+               createUserWithEmailAndPassword(auth, email, password)
+             .then((userCredential) => {
+           // Signed up 
+          const user = userCredential.user;
+          message.textContent = "Account successfully created!";
+          message.classList.remove("error");
+          message.classList.add("created");
+         
+         })
+            .catch((error) => {
+         const errorCode = error.code;
+         const errorMessage = error.message;
+         console.log(errorCode)
+         message.classList.add("error");
+         if(errorCode == "auth/email-already-in-use"){
+            message.textContent = "This email is already registered!";
+         }else if(errorCode == "auth/invalid-email"){
+            message.textContent = "The email format is incorrect!";
+         }else if(errorCode == "auth/weak-password"){
+            message.textContent = "The password must be at least 6 characters!";
+         }
+   
+         
+     });
+         
+       })
+             
+       let btnClick = document.querySelector("button");
+
+btnClick.addEventListener("click", () =>{
+    window.location.href = "./../index.html";
+   })
+
+             </script>
+</body>
+</html>
